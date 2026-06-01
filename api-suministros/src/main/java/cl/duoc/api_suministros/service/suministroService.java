@@ -61,6 +61,12 @@ public class suministroService {
                 suministro.setEstado(detalles.getEstado());
             }
 
+            suministro.setUsuarioModificacion(
+                    "tecnico_cloudtech");
+
+            suministro.setFechaModificacion(
+                    LocalDate.now().toString());
+
             return repository.save(suministro);
         }
         return null;
