@@ -48,13 +48,13 @@ public class suministroController {
         String resultado = service.deleteSuministro(id);
 
         if (resultado.equals("Eliminado correctamente.")) {
-            return ResponseEntity.noContent().build(); // 204
+            return ResponseEntity.noContent().build(); 
         }
 
         if (resultado.startsWith("ERROR:")) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(resultado); // 409
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(resultado); 
         }
 
-        return ResponseEntity.notFound().build(); // 404
+        return ResponseEntity.notFound().build(); 
     }
 }
