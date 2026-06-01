@@ -30,7 +30,7 @@ public class suministroService {
 
             if (model.getUnidades() < 3) {
                 try {
-                    String url = "http://localhost:8082/api/proveedores/verificar/" + idFabricante;
+                    String url = "http://localhost:21300/api/proveedores/verificar/" + idFabricante;
                     String infoRemota = restTemplate.getForObject(url, String.class);
 
                     model.setSku("INFO PROVEEDOR: " + infoRemota);
