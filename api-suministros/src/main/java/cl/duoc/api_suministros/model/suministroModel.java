@@ -24,7 +24,6 @@ public class suministroModel {
     @Column(nullable = false)
     private String nombre;
 
-    @NotBlank(message = "El stock no puede ser cero.")
     @Min(value = 0, message = "El stock no puede ser menor a cero.")
     @Column(nullable = false)
     private Integer unidades;
