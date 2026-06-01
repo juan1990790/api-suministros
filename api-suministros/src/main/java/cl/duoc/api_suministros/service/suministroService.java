@@ -1,7 +1,7 @@
 package cl.duoc.api_suministros.service;
 
-import cl.duoc.api_suministros.repository.suministroRepository;
 import cl.duoc.api_suministros.model.suministroModel;
+import cl.duoc.api_suministros.repository.suministroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -28,14 +28,17 @@ public class suministroService {
         if (componente.isPresent()) {
             suministroModel model = componente.get();
 
+            // REGLA DE NEGOCIO: Consulta remota si stock < 3
             if (model.getUnidades() < 3) {
                 try {
-                    String url = "http://localhost:21300/api/proveedores/verificar/" + idFabricante;
+                    // Llamamos a la API 2 (Central de Proveedores)
+                    String url = "http://localhost:8081/api/v1/ordenes/" + idFabricante;
                     String infoRemota = restTemplate.getForObject(url, String.class);
 
-                    model.setSku("INFO PROVEEDOR: " + infoRemota);
+                    // Asignamos la info al campo @Transient
+                    model.setInfoProveedorRemoto(infoRemota);
                 } catch (Exception e) {
-                    model.setSku("INFO PROVEEDOR: Sin conexión con central.");
+                    model.setInfoProveedorRemoto("Sin conexión con central de proveedores.");
                 }
             }
             return Optional.of(model);
@@ -55,17 +58,12 @@ public class suministroService {
             suministro.setUnidades(detalles.getUnidades());
             suministro.setValorComercial(detalles.getValorComercial());
 
+            // Control de ciclo de vida automático
             if (detalles.getUnidades() == 0) {
                 suministro.setEstado("AGOTADO");
             } else {
                 suministro.setEstado(detalles.getEstado());
             }
-
-            suministro.setUsuarioModificacion(
-                    "tecnico_cloudtech");
-
-            suministro.setFechaModificacion(
-                    LocalDate.now().toString());
 
             return repository.save(suministro);
         }
@@ -76,6 +74,7 @@ public class suministroService {
         Optional<suministroModel> suministro = repository.findById(id);
 
         if (suministro.isPresent()) {
+            // REGLA DE NEGOCIO: Restricción ISO
             if ("AGOTADO".equalsIgnoreCase(suministro.get().getEstado())) {
                 return "ERROR: El registro contable está congelado para la revisión de fin de año (Normativa ISO).";
             }
