@@ -37,7 +37,6 @@ public class suministroModel {
 
     private String sku;
 
-    // Campo dinámico: Se muestra en Postman, pero no se guarda en la BD
     @Transient
     private String infoProveedorRemoto;
 }
