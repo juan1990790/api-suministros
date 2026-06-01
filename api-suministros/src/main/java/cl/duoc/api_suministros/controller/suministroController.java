@@ -39,11 +39,17 @@ public class suministroController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<List<suministroModel>> actualizarSuministro(@PathVariable("id") Long id, @RequestBody suministroModel detalles) {
-        suministroModel actualizado = service.updateSuministro(id, detalles);
+    public ResponseEntity<suministroModel> actualizarSuministro(
+            @PathVariable("id") Long id,
+            @RequestBody suministroModel detalles) {
+
+        suministroModel actualizado =
+                service.updateSuministro(id, detalles);
+
         if (actualizado != null) {
             return ResponseEntity.ok(actualizado);
         }
+
         return ResponseEntity.notFound().build();
     }
 
