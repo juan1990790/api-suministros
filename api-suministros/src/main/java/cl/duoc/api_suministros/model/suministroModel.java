@@ -40,4 +40,11 @@ public class suministroModel {
     private String estado; // EN_STOCK, ASIGNADO, AGOTADO
 
     private String sku;
+
+    @ManyToOne
+    @JoinColumn(name = "BODEGA_ID")
+    private bodegaModel bodega;
+
+    private String usuarioModificacion;
+    private String fechaModificacion;
 }
