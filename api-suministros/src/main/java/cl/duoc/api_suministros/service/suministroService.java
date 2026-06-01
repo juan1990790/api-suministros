@@ -28,14 +28,13 @@ public class suministroService {
         if (componente.isPresent()) {
             suministroModel model = componente.get();
 
-            // REGLA DE NEGOCIO: Consulta remota si stock < 3
             if (model.getUnidades() < 3) {
                 try {
-                    // Llamamos a la API 2 (Central de Proveedores)
+                    
                     String url = "http://localhost:8081/api/v1/ordenes/" + idFabricante;
                     String infoRemota = restTemplate.getForObject(url, String.class);
                     
-                    // Asignamos la info al campo @Transient
+                    
                     model.setInfoProveedorRemoto(infoRemota);
                 } catch (Exception e) {
                     model.setInfoProveedorRemoto("Sin conexión con central de proveedores.");
@@ -58,7 +57,6 @@ public class suministroService {
             suministro.setUnidades(detalles.getUnidades());
             suministro.setValorComercial(detalles.getValorComercial());
 
-            // Control de ciclo de vida automático
             if (detalles.getUnidades() == 0) {
                 suministro.setEstado("AGOTADO");
             } else {
@@ -74,7 +72,6 @@ public class suministroService {
         Optional<suministroModel> suministro = repository.findById(id);
 
         if (suministro.isPresent()) {
-            // REGLA DE NEGOCIO: Restricción ISO
             if ("AGOTADO".equalsIgnoreCase(suministro.get().getEstado())) {
                 return "ERROR: El registro contable está congelado para la revisión de fin de año (Normativa ISO).";
             }
