@@ -1,6 +1,7 @@
 package cl.duoc.api_suministros.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
@@ -21,6 +22,7 @@ public class suministroModel {
     private String nombre;
 
     @NotBlank(message = "El stock no puede ser cero.")
+    @Min(value = 0, message = "El stock no puede ser menor a cero.")
     @Column(nullable = false)
     private int unidades;
 
