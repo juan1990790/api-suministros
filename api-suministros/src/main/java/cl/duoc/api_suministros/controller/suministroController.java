@@ -1,7 +1,8 @@
-package cl.duoc.api_suministros.Controller;
+package cl.duoc.api_suministros.controller;
 
-import cl.duoc.api_suministros.Service.suministroService;
-import cl.duoc.api_suministros.model.SuministroModel;
+import cl.duoc.api_suministros.model.suministroModel;
+import cl.duoc.api_suministros.service.suministroService;
+import cl.duoc.api_suministros.model.suministroModel;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,39 +19,34 @@ public class suministroController {
     @Autowired
     suministroService service;
 
-    // READ ALL
     @GetMapping
-    public ResponseEntity<List<SuministroModel>> obtenerTodos() {
-        List<SuministroModel> suministros = service.getAllSuministros();
+    public ResponseEntity<List<suministroModel>> obtenerTodos() {
+        List<suministroModel> suministros = service.getAllSuministros();
         return new ResponseEntity<>(suministros, HttpStatus.OK);
     }
 
-    // READ BY ID FABRICANTE (Regla: Activa consulta remota si stock < 3)
     @GetMapping("/{idFabricante}")
-    public ResponseEntity<SuministroModel> obtenerPorFabricante(@PathVariable("idFabricante") String idFab) {
+    public ResponseEntity<suministroModel> obtenerPorFabricante(@PathVariable("idFabricante") String idFab) {
         return service.getSuministroByIdFabricante(idFab)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // CREATE
     @PostMapping
-    public ResponseEntity<SuministroModel> crearSuministro(@Valid @RequestBody SuministroModel suministro) {
-        SuministroModel nuevo = service.createSuministro(suministro);
+    public ResponseEntity<suministroModel> crearSuministro(@Valid @RequestBody suministroModel suministro) {
+        suministroModel nuevo = service.createSuministro(suministro);
         return new ResponseEntity<>(nuevo, HttpStatus.CREATED);
     }
 
-    // UPDATE (PUT) - Para actualizaciones de técnicos
     @PutMapping("/{id}")
-    public ResponseEntity<SuministroModel> actualizarSuministro(@PathVariable("id") Long id, @RequestBody SuministroModel detalles) {
-        SuministroModel actualizado = service.updateSuministro(id, detalles);
+    public ResponseEntity<List<suministroModel>> actualizarSuministro(@PathVariable("id") Long id, @RequestBody suministroModel detalles) {
+        suministroModel actualizado = service.updateSuministro(id, detalles);
         if (actualizado != null) {
             return ResponseEntity.ok(actualizado);
         }
         return ResponseEntity.notFound().build();
     }
 
-    // DELETE BY ID (Regla ISO: Bloqueo si está AGOTADO)
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> eliminarSuministro(@PathVariable("id") Long id) {
         String resultado = service.deleteSuministro(id);
@@ -60,7 +56,6 @@ public class suministroController {
         }
 
         if (resultado.startsWith("ERROR:")) {
-            // Devolvemos 409 Conflict o 422 Unprocessable Entity con el mensaje semántico de la ISO
             return ResponseEntity.status(HttpStatus.CONFLICT).body(resultado);
         }
 

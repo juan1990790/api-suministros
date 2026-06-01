@@ -4,7 +4,10 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import lombok.Data;
 
+
+@Data
 @Entity
 @Table(name = "componentes")
 public class suministroModel {
@@ -24,7 +27,7 @@ public class suministroModel {
     @NotBlank(message = "El stock no puede ser cero.")
     @Min(value = 0, message = "El stock no puede ser menor a cero.")
     @Column(nullable = false)
-    private int unidades;
+    private Integer unidades;
 
 
     @Column(nullable = false)
