@@ -37,7 +37,7 @@ public class suministroService {
                     
                     model.setInfoProveedorRemoto(infoRemota);
                 } catch (Exception e) {
-                    model.setInfoProveedorRemoto("Sin conexión con central de proveedores.");
+                    model.setInfoProveedorRemoto("Sin conexion con central de proveedores.");
                 }
             }
             return Optional.of(model);
@@ -73,7 +73,7 @@ public class suministroService {
 
         if (suministro.isPresent()) {
             if ("AGOTADO".equalsIgnoreCase(suministro.get().getEstado())) {
-                return "ERROR: El registro contable está congelado para la revisión de fin de año (Normativa ISO).";
+                return "ERROR: El registro contable está congelado para la revisión de fin de año.";
             }
 
             repository.deleteById(id);
