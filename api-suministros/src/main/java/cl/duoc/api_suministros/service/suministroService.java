@@ -12,6 +12,7 @@ import java.util.Optional;
 @Service
 public class suministroService {
 
+    
     @Autowired
     suministroRepository repository;
 
@@ -37,7 +38,7 @@ public class suministroService {
                     
                     model.setInfoProveedorRemoto(infoRemota);
                 } catch (Exception e) {
-                    model.setInfoProveedorRemoto("Sin conexion con central de proveedores.");
+                    model.setInfoProveedorRemoto("Sin conexion con central de proveedores");
                 }
             }
             return Optional.of(model);
@@ -58,7 +59,7 @@ public class suministroService {
             suministro.setValorComercial(detalles.getValorComercial());
 
             if (detalles.getUnidades() == 0) {
-                suministro.setEstado("AGOTADO");
+                suministro.setEstado(" AGOTADO");
             } else {
                 suministro.setEstado(detalles.getEstado());
             }
@@ -68,17 +69,18 @@ public class suministroService {
         return null;
     }
 
+    
     public String deleteSuministro(Long id) {
         Optional<suministroModel> suministro = repository.findById(id);
 
         if (suministro.isPresent()) {
-            if ("AGOTADO".equalsIgnoreCase(suministro.get().getEstado())) {
-                return "ERROR: El registro contable está congelado para la revisión de fin de año.";
+            if ("AGOTADO ".equalsIgnoreCase(suministro.get().getEstado())) {
+                return "ERROR: El registro contable esta congelado para la revisipn";
             }
 
             repository.deleteById(id);
-            return "Eliminado correctamente.";
+            return "Eliminado correctamente";
         }
-        return "Componente no encontrado.";
+        return "Componente no encontrado";
     }
 }
