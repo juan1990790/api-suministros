@@ -31,10 +31,13 @@ public class suministroModel {
     @Min(0)
     @Column(nullable = false)
     private Double valorComercial;
-
+    
     @Column(nullable = false)
     private String estado;
 
+    @Column(name = "BODEGA_ID", nullable = false)
+    private Long bodegaId;
+    
     private String sku;
 
     @Transient
