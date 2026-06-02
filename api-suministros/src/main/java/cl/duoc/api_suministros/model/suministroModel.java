@@ -20,13 +20,12 @@ public class suministroModel {
     @Column(nullable = false)
     private String nombre;
 
-    // Validación del Caso 2: Jamás negativos
+
     @NotNull
     @Min(0)
     @Column(nullable = false)
     private Integer unidades;
 
-    // Validación del Caso 2: Jamás negativos
     @NotNull
     @Min(0)
     @Column(nullable = false)
