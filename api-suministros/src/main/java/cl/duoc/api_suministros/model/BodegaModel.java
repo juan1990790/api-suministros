@@ -24,5 +24,5 @@ public class BodegaModel {
     private String ubicacion;
 
     @OneToMany(mappedBy = "bodega")
-    private List<SuministroModel> suministros;
+    private List<SuministroModel> suministros;//
 }
