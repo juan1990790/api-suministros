@@ -34,8 +34,9 @@ public class suministroModel {
     @Column(nullable = false)
     private String estado;
 
-    @Column(name = "BODEGA_ID", nullable = false)
-    private Long bodegaId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "BODEGA_ID", nullable = false)
+    private BodegaModel bodega;
     
     private String sku;
 
