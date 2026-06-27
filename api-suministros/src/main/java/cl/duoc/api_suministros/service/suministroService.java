@@ -2,7 +2,7 @@ package cl.duoc.api_suministros.Service;
 
 import cl.duoc.api_suministros.config.AuditoriaException; 
 import cl.duoc.api_suministros.model.*;
-import cl.duoc.api_suministros.Repository.*;
+import cl.duoc.api_suministros.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;

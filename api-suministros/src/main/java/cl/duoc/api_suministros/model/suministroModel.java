@@ -14,7 +14,7 @@ public class suministroModel {
     private Long id;
 
     @NotBlank(message = "ID Fabricante obligatorio")
-    @Column(name = "ID_FABRICANTE", nullable = false, unique = true, length = 50) 
+    @Column(name = "ID_FABRICANTE", nullable = false, unique = true, length = 50)
     private String idFabricante;
 
     @NotBlank(message = "Nombre obligatorio")
@@ -26,7 +26,7 @@ public class suministroModel {
 
     @NotNull(message = "Unidades obligatorias")
     @Min(value = 0, message = "No pueden ser negativas")
-    @Column(name = "UNIDADES", nullable = false) 
+    @Column(name = "UNIDADES", nullable = false)
     private Integer unidades;
 
     @NotNull(message = "Valor obligatorio")
@@ -35,10 +35,13 @@ public class suministroModel {
     private Double valorComercial;
 
     @Pattern(regexp = "EN_STOCK|ASIGNADO|AGOTADO", message = "Estado no válido")
-    @Column(name = "ESTADO", nullable = false, length = 20) 
+    @Column(name = "ESTADO", nullable = false, length = 20)
     private String estado;
 
     @NotNull(message = "Bodega ID obligatoria")
     @Column(name = "BODEGA_ID", nullable = false)
     private Long bodegaId;
+
+    @Transient
+    private String infoProveedorRemoto;
 }
