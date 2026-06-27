@@ -21,8 +21,10 @@ public class BodegaModel {
 
     @NotBlank
     @Column(nullable = false)
-    private String ubicacion;
+    private String ciudad;
 
-    @OneToMany(mappedBy = "bodega")
-    private List<SuministroModel> suministros;///
+    @NotBlank
+    @Column(nullable = false)
+    private String pais;
+
 }
