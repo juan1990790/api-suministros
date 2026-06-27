@@ -1,7 +1,8 @@
-package cl.duoc.api_suministros.controller;
+package cl.duoc.api_suministros.Controller;
 
 import cl.duoc.api_suministros.model.suministroModel;
-import cl.duoc.api_suministros.service.suministroService;
+import cl.duoc.api_suministros.Service.suministroService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,7 @@ import java.util.List;
 public class suministroController {
 
     @Autowired
-    suministroService service;
+    private suministroService service;
 
     @GetMapping
     public ResponseEntity<List<suministroModel>> obtenerTodos() {
@@ -27,15 +28,15 @@ public class suministroController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
-
+    
     @PostMapping
-    public ResponseEntity<suministroModel> crearSuministro(@RequestBody suministroModel suministro) {
+    public ResponseEntity<suministroModel> crearSuministro(@Valid @RequestBody suministroModel suministro) {
         suministroModel nuevo = service.createSuministro(suministro);
         return new ResponseEntity<>(nuevo, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<suministroModel> actualizarSuministro(@PathVariable("id") Long id, @RequestBody suministroModel detalles) {
+    public ResponseEntity<suministroModel> actualizarSuministro(@PathVariable("id") Long id, @Valid @RequestBody suministroModel detalles) {
         suministroModel actualizado = service.updateSuministro(id, detalles);
         if (actualizado != null) {
             return ResponseEntity.ok(actualizado);
@@ -44,17 +45,8 @@ public class suministroController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> eliminarSuministro(@PathVariable("id") Long id) {
-        String resultado = service.deleteSuministro(id);
-
-        if (resultado.equals("Eliminado correctamente.")) {
-            return ResponseEntity.noContent().build(); 
-        }
-
-        if (resultado.startsWith("ERROR:")) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(resultado); 
-        }
-
-        return ResponseEntity.notFound().build(); 
+    public ResponseEntity<Void> eliminarSuministro(@PathVariable("id") Long id) {
+        service.deleteSuministro(id);
+        return ResponseEntity.noContent().build();
     }
 }
