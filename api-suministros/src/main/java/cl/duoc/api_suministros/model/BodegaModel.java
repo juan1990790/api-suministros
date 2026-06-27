@@ -1,30 +1,27 @@
 package cl.duoc.api_suministros.model;
 
-import java.util.List;
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "bodegas")
+@Table(name = "BODEGAS")
 public class BodegaModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
-    @Column(nullable = false)
+    @NotBlank(message = "El nombre es obligatorio")
+    @Column(name = "NOMBRE", nullable = false, length = 100) // Longitud y no nulo
     private String nombre;
 
-    @NotBlank
-    @Column(nullable = false)
+    @NotBlank(message = "La ciudad es obligatoria")
+    @Column(name = "CIUDAD", nullable = false, length = 100)
     private String ciudad;
 
-    @NotBlank
-    @Column(nullable = false)
+    @NotBlank(message = "El país es obligatorio")
+    @Column(name = "PAIS", nullable = false, length = 50)
     private String pais;
-
 }

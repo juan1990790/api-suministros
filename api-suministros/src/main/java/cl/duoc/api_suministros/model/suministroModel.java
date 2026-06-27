@@ -1,45 +1,44 @@
 package cl.duoc.api_suministros.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "componentes")
+@Table(name = "COMPONENTES")
 public class suministroModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @NotBlank(message = "ID Fabricante obligatorio")
+    @Column(name = "ID_FABRICANTE", nullable = false, unique = true, length = 50) // SEGURIDAD: Unique y no nulo
     private String idFabricante;
 
-    @Column(nullable = false)
+    @NotBlank(message = "Nombre obligatorio")
+    @Column(name = "NOMBRE", nullable = false, length = 100)
     private String nombre;
 
-
-    @NotNull
-    @Min(0)
-    @Column(nullable = false)
-    private Integer unidades;
-
-    @NotNull
-    @Min(0)
-    @Column(nullable = false)
-    private Double valorComercial;
-    
-    @Column(nullable = false)
-    private String estado;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "BODEGA_ID", nullable = false)
-    private BodegaModel bodega;
-    
+    @Column(name = "SKU", length = 50)
     private String sku;
 
-    @Transient
-    private String infoProveedorRemoto;
+    @NotNull(message = "Unidades obligatorias")
+    @Min(value = 0, message = "No pueden ser negativas")
+    @Column(name = "UNIDADES", nullable = false) // SEGURIDAD: No nulo en BD
+    private Integer unidades;
+
+    @NotNull(message = "Valor obligatorio")
+    @Min(value = 0, message = "El valor debe ser positivo")
+    @Column(name = "VALOR_COMERCIAL", nullable = false, precision = 10, scale = 2)
+    private Double valorComercial;
+
+    @Pattern(regexp = "EN_STOCK|ASIGNADO|AGOTADO", message = "Estado no válido")
+    @Column(name = "ESTADO", nullable = false, length = 20) // SEGURIDAD: Restricción de valores en BD
+    private String estado;
+
+    @NotNull(message = "Bodega ID obligatoria")
+    @Column(name = "BODEGA_ID", nullable = false)
+    private Long bodegaId;
 }
