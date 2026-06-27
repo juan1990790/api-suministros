@@ -1,7 +1,7 @@
-package cl.duoc.api_suministros.Controller;
+package cl.duoc.api_suministros.controller;
 
 import cl.duoc.api_suministros.model.suministroModel;
-import cl.duoc.api_suministros.Service.suministroService;
+import cl.duoc.api_suministros.service.suministroService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
