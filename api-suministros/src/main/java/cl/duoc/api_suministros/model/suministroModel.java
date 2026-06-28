@@ -31,7 +31,7 @@ public class suministroModel {
 
     @NotNull(message = "Valor obligatorio")
     @Min(value = 0, message = "El valor debe ser positivo")
-    @Column(name = "VALOR_COMERCIAL", nullable = false, precision = 10, scale = 2)
+    @Column(name = "VALOR_COMERCIAL", nullable = false)
     private Double valorComercial;
 
     @Pattern(regexp = "EN_STOCK|ASIGNADO|AGOTADO", message = "Estado no válido")
