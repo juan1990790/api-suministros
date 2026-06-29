@@ -8,11 +8,6 @@ import cl.duoc.api_suministros.model.suministroModel;
 import cl.duoc.api_suministros.repository.suministroRepository;
 import cl.duoc.api_suministros.repository.MovimientoRepository;
 
-
-import cl.duoc.api_suministros.service.suministroService;
-import cl.duoc.api_suministros.model.suministroModel;
-import cl.duoc.api_suministros.repository.suministroRepository;
-import cl.duoc.api_suministros.repository.MovimientoRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -143,7 +138,6 @@ public class SuministroServiceTest {
         verify(logRepository, times(1)).save(any(MovimientoModel.class));
     }
 
-    //siguiente
     @Test
     void deleteSuministro_Exitoso() {
         // Arrange
@@ -156,5 +150,23 @@ public class SuministroServiceTest {
         
         verify(repository, times(1)).findById(1L);
         verify(repository, times(1)).deleteById(1L);
+    }
+
+    @Test
+    void deleteSuministro_EstadoAgotado_LanzaAuditoriaException() {
+        // Arrange: Forzamos el estado que congela el registro
+        suministroPrueba.setEstado("AGOTADO");
+        when(repository.findById(1L)).thenReturn(Optional.of(suministroPrueba));
+
+        // Act & Assert: Validamos que se arroje la excepción esperada
+        AuditoriaException excepcion = assertThrows(AuditoriaException.class, () -> {
+            service.deleteSuministro(1L);
+        });
+
+        // Verificamos que el mensaje contenga la restricción contable
+        assertTrue(excepcion.getMessage().contains("congelado"));
+
+        // Verificación de seguridad: El metodo deleteById NUNCA debió ejecutarse
+        verify(repository, never()).deleteById(anyLong());
     }
 }
