@@ -169,4 +169,6 @@ public class SuministroServiceTest {
         // Verificación de seguridad: El metodo deleteById NUNCA debió ejecutarse
         verify(repository, never()).deleteById(anyLong());
     }
+
+    //ok
 }
