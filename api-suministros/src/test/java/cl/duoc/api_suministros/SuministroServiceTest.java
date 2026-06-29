@@ -1,5 +1,14 @@
 package cl.duoc.api_suministros;
 
+
+import cl.duoc.api_suministros.config.AuditoriaException;
+import cl.duoc.api_suministros.model.MovimientoModel;
+import cl.duoc.api_suministros.service.suministroService;
+import cl.duoc.api_suministros.model.suministroModel;
+import cl.duoc.api_suministros.repository.suministroRepository;
+import cl.duoc.api_suministros.repository.MovimientoRepository;
+
+
 import cl.duoc.api_suministros.service.suministroService;
 import cl.duoc.api_suministros.model.suministroModel;
 import cl.duoc.api_suministros.repository.suministroRepository;
@@ -88,22 +97,26 @@ public class SuministroServiceTest {
     }
 
     @Test
-    void crearSuministro_Exitoso() {
-        // Arrange: Configuramos el mock para que cuando se llame a save(), devuelva nuestro suministroPrueba
+    void createSuministro_Exitoso() {
+        // Arrange
+        suministroPrueba.setUnidades(10);
         when(repository.save(any(suministroModel.class))).thenReturn(suministroPrueba);
+        when(logRepository.save(any(MovimientoModel.class))).thenReturn(new MovimientoModel());
 
-        // Act: Ejecutamos el método de tu servicio real
+        // Act
         suministroModel resultado = service.createSuministro(suministroPrueba);
 
-        // Assert: Validamos que los datos devueltos coincidan
+        // Assert
         assertNotNull(resultado);
-        assertEquals("FAB-123", resultado.getIdFabricante());
-        assertEquals("Componente Test", resultado.getNombre());
+        assertEquals("SKU-TEST", resultado.getSku());
+        assertEquals(10, resultado.getUnidades());
 
-        // Verificamos que el repositorio ejecutó el comando save exactamente 1 vez
+        // Verificaciones de comportamiento de los repositorios
         verify(repository, times(1)).save(any(suministroModel.class));
+        verify(logRepository, times(1)).save(any(MovimientoModel.class));
     }
-    //desde aca juan pega
+
+
     @Test
     void updateSuministro_Exitoso() {
         // Arrange
@@ -129,4 +142,6 @@ public class SuministroServiceTest {
         verify(repository, times(1)).save(any(suministroModel.class));
         verify(logRepository, times(1)).save(any(MovimientoModel.class));
     }
+
+    //siguiente
 }
