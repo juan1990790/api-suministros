@@ -144,4 +144,17 @@ public class SuministroServiceTest {
     }
 
     //siguiente
+    @Test
+    void deleteSuministro_Exitoso() {
+        // Arrange
+        suministroPrueba.setEstado("EN_STOCK");
+        when(repository.findById(1L)).thenReturn(Optional.of(suministroPrueba));
+        doNothing().when(repository).deleteById(1L);
+
+        // Act & Assert
+        assertDoesNotThrow(() -> service.deleteSuministro(1L));
+        
+        verify(repository, times(1)).findById(1L);
+        verify(repository, times(1)).deleteById(1L);
+    }
 }
