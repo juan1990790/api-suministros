@@ -86,4 +86,23 @@ public class SuministroServiceTest {
         // Verificamos que NO se llamó al RestTemplate
         verify(restTemplate, never()).getForObject(anyString(), eq(String.class));
     }
+
+    @Test
+    void crearSuministro_Exitoso() {
+        // Arrange: Configuramos el mock para que cuando se llame a save(), devuelva nuestro suministroPrueba
+        when(repository.save(any(suministroModel.class))).thenReturn(suministroPrueba);
+
+        // Act: Ejecutamos el método de tu servicio real
+        suministroModel resultado = service.createSuministro(suministroPrueba);
+
+        // Assert: Validamos que los datos devueltos coincidan
+        assertNotNull(resultado);
+        assertEquals("FAB-123", resultado.getIdFabricante());
+        assertEquals("Componente Test", resultado.getNombre());
+
+        // Verificamos que el repositorio ejecutó el comando save exactamente 1 vez
+        verify(repository, times(1)).save(any(suministroModel.class));
+    }
+
+    //desde aca juan pega
 }
