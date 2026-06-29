@@ -103,6 +103,30 @@ public class SuministroServiceTest {
         // Verificamos que el repositorio ejecutó el comando save exactamente 1 vez
         verify(repository, times(1)).save(any(suministroModel.class));
     }
-
     //desde aca juan pega
+    @Test
+    void updateSuministro_Exitoso() {
+        // Arrange
+        suministroModel detallesNuevos = new suministroModel();
+        detallesNuevos.setUnidades(5);
+        detallesNuevos.setValorComercial(1200.0);
+        detallesNuevos.setEstado("EN_STOCK");
+
+        // Simulamos la secuencia completa: buscar -> guardar -> auditar
+        when(repository.findById(1L)).thenReturn(Optional.of(suministroPrueba));
+        when(repository.save(any(suministroModel.class))).thenReturn(suministroPrueba);
+        when(logRepository.save(any(MovimientoModel.class))).thenReturn(new MovimientoModel());
+
+        // Act
+        suministroModel resultado = service.updateSuministro(1L, detallesNuevos);
+
+        // Assert
+        assertNotNull(resultado);
+        assertEquals(5, resultado.getUnidades());
+        assertEquals(1200.0, resultado.getValorComercial());
+        
+        verify(repository, times(1)).findById(1L);
+        verify(repository, times(1)).save(any(suministroModel.class));
+        verify(logRepository, times(1)).save(any(MovimientoModel.class));
+    }
 }
