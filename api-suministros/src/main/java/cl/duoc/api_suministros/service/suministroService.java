@@ -74,7 +74,7 @@ public class suministroService {
         if (suministro.isPresent()) {
             
             if ("AGOTADO".equalsIgnoreCase(suministro.get().getEstado().trim())) {
-                throw new AuditoriaException("ERROR: El registro contable está congelado para revisión (Estado AGOTADO).");
+                throw new AuditoriaException("ERROR: El registro está congelado para revisión (Estado AGOTADO).");
             }
             repository.deleteById(id);
         } else {

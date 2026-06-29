@@ -34,7 +34,7 @@ public class suministroModel {
     @Column(name = "VALOR_COMERCIAL", nullable = false)
     private Double valorComercial;
 
-    @Pattern(regexp = "EN_STOCK|ASIGNADO|AGOTADO", message = "Estado no válido")
+    @Pattern(regexp = "EN_STOCK|ASIGNADO|AGOTADO", message = "Estado no valido")
     @Column(name = "ESTADO", nullable = false, length = 20)
     private String estado;
 
