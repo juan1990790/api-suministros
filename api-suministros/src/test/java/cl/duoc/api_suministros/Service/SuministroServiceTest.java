@@ -1,4 +1,4 @@
-package cl.duoc.api_suministros;
+package cl.duoc.api_suministros.Service;
 
 
 import cl.duoc.api_suministros.config.AuditoriaException;
