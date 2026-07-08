@@ -18,10 +18,11 @@ class SuministroModelValidationTest {
 
     private static Validator validator;
 
-    @BeforeAll
+   @BeforeAll
     static void initValidator() {
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        validator = factory.getValidator();
+        try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
+            validator = factory.getValidator();
+        }
     }
 
     // Metodo auxiliar para no repetir código en cada test
