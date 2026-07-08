@@ -1,5 +1,6 @@
-package cl.duoc.api_suministros.model;
+package cl.duoc.api_suministros.Model;
 
+import cl.duoc.api_suministros.model.suministroModel;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
@@ -13,7 +14,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class suministroModelValidationTest {
+class SuministroModelValidationTest {
 
     private static Validator validator;
 
@@ -23,7 +24,7 @@ class suministroModelValidationTest {
         validator = factory.getValidator();
     }
 
-    // Método auxiliar para no repetir código en cada test
+    // Metodo auxiliar para no repetir código en cada test
     private suministroModel crearSuministroValido() {
         suministroModel s = new suministroModel();
         s.setIdFabricante("FAB-VALIDO-01");

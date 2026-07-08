@@ -1,4 +1,4 @@
-package cl.duoc.api_suministros.controller;
+package cl.duoc.api_suministros.Controller;
 
 import cl.duoc.api_suministros.model.suministroModel;
 import cl.duoc.api_suministros.service.suministroService;

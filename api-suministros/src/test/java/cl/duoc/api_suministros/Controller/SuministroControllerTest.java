@@ -1,4 +1,4 @@
-package cl.duoc.api_suministros.controller;
+package cl.duoc.api_suministros.Controller;
 
 import cl.duoc.api_suministros.model.suministroModel;
 import cl.duoc.api_suministros.service.suministroService;
@@ -20,7 +20,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class suministroControllerTest {
+class SuministroControllerTest {
 
     @Mock
     private suministroService service;
