@@ -85,6 +85,7 @@ class SuministroControllerTest {
         ResponseEntity<suministroModel> resp = controller.crearSuministro(suministroPrueba);
 
         assertEquals(HttpStatus.CREATED, resp.getStatusCode());
+        assertNotNull(resp.getBody());
         assertEquals("FAB-123", resp.getBody().getIdFabricante());
         verify(service, times(1)).createSuministro(any(suministroModel.class));
     }
