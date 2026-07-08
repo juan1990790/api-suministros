@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
@@ -49,6 +50,7 @@ class SuministroControllerTest {
         ResponseEntity<List<suministroModel>> resp = controller.obtenerTodos();
 
         assertEquals(HttpStatus.OK, resp.getStatusCode());
+        assertNotNull(resp.getBody());
         assertEquals(1, resp.getBody().size());
         verify(service, times(1)).getAllSuministros();
     }
@@ -61,6 +63,7 @@ class SuministroControllerTest {
         ResponseEntity<suministroModel> resp = controller.obtenerPorFabricante("FAB-123");
 
         assertEquals(HttpStatus.OK, resp.getStatusCode());
+        assertNotNull(resp.getBody());
         assertEquals("Componente Test", resp.getBody().getNombre());
     }
 
