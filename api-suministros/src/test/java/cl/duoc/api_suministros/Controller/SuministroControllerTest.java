@@ -98,6 +98,7 @@ class SuministroControllerTest {
         ResponseEntity<suministroModel> resp = controller.actualizarSuministro(1L, suministroPrueba);
 
         assertEquals(HttpStatus.OK, resp.getStatusCode());
+        assertNotNull(resp.getBody());
         assertEquals(1500.0, resp.getBody().getValorComercial());
     }
 
