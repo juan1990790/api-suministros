@@ -42,7 +42,7 @@ class SuministroControllerTest {
         suministroPrueba.setUnidades(10);
     }
 
-    // Test para GET (Todos)
+    // Test para GET (lista a todos )
     @Test
     void obtenerTodos_responde200() {
         when(service.getAllSuministros()).thenReturn(List.of(suministroPrueba));
@@ -55,7 +55,7 @@ class SuministroControllerTest {
         verify(service, times(1)).getAllSuministros();
     }
 
-    // Test para GET /Por Fabricante - Existe
+    // Test para GET / por Fabricante - existe
     @Test
     void obtenerPorFabricante_existe_responde200() {
         when(service.getSuministroByIdFabricante("FAB-123")).thenReturn(Optional.of(suministroPrueba));
@@ -67,7 +67,7 @@ class SuministroControllerTest {
         assertEquals("Componente Test", resp.getBody().getNombre());
     }
 
-    // Test para GET / Por Fabricante - No Existe
+    // Test para GET / Por Fabricante - no existe
     @Test
     void obtenerPorFabricante_noExiste_responde404() {
         when(service.getSuministroByIdFabricante("NADA")).thenReturn(Optional.empty());
@@ -77,7 +77,7 @@ class SuministroControllerTest {
         assertEquals(HttpStatus.NOT_FOUND, resp.getStatusCode());
     }
 
-    // Test para POST (Crear)
+    // Test POST
     @Test
     void crearSuministro_responde201() {
         when(service.createSuministro(any(suministroModel.class))).thenReturn(suministroPrueba);
@@ -90,7 +90,7 @@ class SuministroControllerTest {
         verify(service, times(1)).createSuministro(any(suministroModel.class));
     }
 
-    // Test para PUT (Actualizar - Existe)
+    // Test PUT
     @Test
     void actualizarSuministro_existe_responde200() {
         when(service.updateSuministro(eq(1L), any(suministroModel.class))).thenReturn(suministroPrueba);
@@ -102,7 +102,7 @@ class SuministroControllerTest {
         assertEquals(1500.0, resp.getBody().getValorComercial());
     }
 
-    // Test para DELETE (Eliminar)
+    // Test DELETE
     @Test
     void eliminarSuministro_responde204() {
         doNothing().when(service).deleteSuministro(1L);
