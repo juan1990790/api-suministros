@@ -25,14 +25,13 @@ class SuministroModelValidationTest {
         }
     }
 
-    // Metodo auxiliar para no repetir código en cada test
     private suministroModel crearSuministroValido() {
         suministroModel s = new suministroModel();
         s.setIdFabricante("FAB-VALIDO-01");
         s.setNombre("Tarjeta de Video RTX");
         s.setUnidades(10);
         s.setValorComercial(250000.0);
-        s.setEstado("EN_STOCK"); // Estado permitido por tu Regex
+        s.setEstado("EN_STOCK");
         s.setBodegaId(1L);
         return s;
     }
@@ -90,7 +89,7 @@ class SuministroModelValidationTest {
     @DisplayName("Falla si el estado no respeta el patrón permitido (@Pattern)")
     void estadoInvalido_falla() {
         suministroModel s = crearSuministroValido();
-        s.setEstado("VENDIDO"); // No está en la lista EN_STOCK|ASIGNADO|AGOTADO
+        s.setEstado("VENDIDO");
 
         Set<ConstraintViolation<suministroModel>> violaciones = validator.validate(s);
         assertFalse(violaciones.isEmpty(), "Debe detectar que el estado no cumple el Pattern");
