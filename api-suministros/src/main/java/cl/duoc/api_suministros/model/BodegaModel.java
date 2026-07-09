@@ -14,7 +14,7 @@ public class BodegaModel {
     private Long id;
 
     @NotBlank(message = "El nombre es obligatorio")
-    @Column(name = "NOMBRE", nullable = false, length = 100) // Longitud y no nulo
+    @Column(name = "NOMBRE", nullable = false, length = 100)
     private String nombre;
 
     @NotBlank(message = "La ciudad es obligatoria")
